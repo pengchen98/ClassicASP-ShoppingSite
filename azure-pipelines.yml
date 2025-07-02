@@ -18,7 +18,7 @@ steps:
 
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: '<your-service-connection>'
+    azureSubscription: 'asp-sql-connection'
     appType: 'webApp'
-    appName: '<your-app-service-name>'
+    appName: 'online-asp'
     package: '$(Build.ArtifactStagingDirectory)/**'
