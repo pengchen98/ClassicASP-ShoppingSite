@@ -17,6 +17,15 @@ steps:
     Contents: '**/*.asp'
     TargetFolder: '$(packageFolder)'
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(packageFolder)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(packageFolder)/aspapp.zip'
+    replaceExistingArchive: true
+
+
 # 2. Publish the files as an artifact
 - task: PublishBuildArtifacts@1
   inputs:
@@ -26,7 +35,8 @@ steps:
 # 3. Deploy to Azure Web App
 - task: AzureWebApp@1
   inputs:
+    appType: webApp
     azureSubscription: 'asp-sql-connection'
     appName: '$(webAppName)'
-    package: '$(packageFolder)/aspapp'
+    package: '$(packageFolder)/aspapp.zip'
 
