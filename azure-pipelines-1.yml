@@ -4,21 +4,29 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
+variables:
+  webAppName: 'online-asp'
+  packageFolder: '$(Build.ArtifactStagingDirectory)/aspapp'
+
 steps:
+
+# 1. Copy ASP files to staging directory
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: '**/*.asp'
+    TargetFolder: '$(packageFolder)'
 
+# 2. Publish the files as an artifact
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    PathtoPublish: '$(packageFolder)'
+    ArtifactName: 'aspapp'
 
+# 3. Deploy to Azure Web App
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'asp-sql-connection'
-    appType: 'webApp'
-    appName: 'online-asp'
-    package: '$(Build.ArtifactStagingDirectory)/drop/**'
+    appName: '$(webAppName)'
+    package: '$(Pipeline.Workspace)/aspapp'
+
