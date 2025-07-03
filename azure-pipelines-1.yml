@@ -28,5 +28,5 @@ steps:
   inputs:
     azureSubscription: 'asp-sql-connection'
     appName: '$(webAppName)'
-    package: '$(Pipeline.Workspace)/aspapp'
+    package: '$(Pipeline.Workspace)/aspapp/**'
 
