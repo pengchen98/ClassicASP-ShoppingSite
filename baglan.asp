@@ -8,4 +8,7 @@ Connection_DSN = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=" & sql_server &
 
 Set Baglanti = Server.CreateObject("ADODB.Connection")
 Baglanti.Open Connection_DSN
+If Baglanti.State = 1 Then
+ Response.Write("
+Connection to the database was successful!
 %>
