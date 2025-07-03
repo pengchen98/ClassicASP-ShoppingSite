@@ -10,4 +10,7 @@ Set Baglanti = Server.CreateObject("ADODB.Connection")
 Baglanti.Open Connection_DSN
 If Baglanti.State = 1 Then
  Response.Write("Connection to the database was successful!")
+Else
+        Response.Write("<p>Failed to connect to the database.</p>")
+End If
 %>
